@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 puts 'Bem vindo ao catalogo Telefonico'
 puts 'Para adicionar um contato use a opção 1'
 puts 'Para pesquisar um contato use a opção 2'
@@ -10,29 +12,59 @@ case func
 when 1
   puts 'Você escolheu a adicão de numeros'
   puts 'Digite o nome do contato:'
-  name = gets.chomp
+  name = gets.chomp.to_s
   puts 'Digite o sobrenome do contato'
-  surname = gets.chomp
-  puts 'Digite o DDD do contato'
-  ddd = gets.chomp.to_i
-  puts 'Digite o telefone do contato'
-  tel = gets.chomp.to_i
-  
-  File.open('catalogo.txt', 'a') do |file|
-    file.write("\n#{name}, #{surname}, #{ddd}, #{tel}")
+  surname = gets.chomp.to_s
+
+  File.open('catalogo.txt', 'r') do |file|
+    $name_exist = file.read.match?(/\A#{name}\b/i)
+  end
+
+  File.open('catalogo.txt', 'r') do |file|
+    $surname_exist = file.read.match?(/\A#{name}\b/i)
   end
   
-  puts 'Contato adicionado com sucesso'
+  File.open('catalogo.txt', 'r') do |file|
+    if $name_exist && $surname_exist
+      puts 'Contato já existente'
+      puts "Deseja continuar?\nS - Sim\nN - Não"
+      option = gets.chomp.to_s.downcase
+
+      case option
+      when 's'
+        puts 'Digite o DDD do contato'
+        ddd = gets.chomp.to_i
+        puts 'Digite o telefone do contato'
+        tel = gets.chomp.to_i
+        File.open('catalogo.txt', 'a') do |file|
+          file.write("\n#{name}, #{surname}, #{ddd}, #{tel}")
+        end
+        puts 'Contato adicionado com sucesso'
+      
+      when 'n'
+        break
+      end
+    else
+      puts 'Digite o DDD do contato'
+      ddd = gets.chomp.to_i
+      puts 'Digite o telefone do contato'
+      tel = gets.chomp.to_i
+      File.open('catalogo.txt', 'a') do |file|
+        file.write("\n#{name}, #{surname}, #{ddd}, #{tel}")
+      end
+      puts 'Contato adicionado com sucesso'
+    end
+  end
 
 when 2
   puts 'Você escolheu a função de pesquisa'
   puts 'Digite o nome do contato a ser pesquisado'
   name = gets.chomp.to_s
   File.open('catalogo.txt', 'r') do |file|
-    if file.read.match? /\A#{name}\b/i
+    if file.read.match?(/\A#{name}\b/i)
       puts 'Contato encontrado'
-      File.open 'catalogo.txt' do |file|
-        puts file.find { |line| line =~ /\A#{name}\b/i}
+      File.open 'catalogo.txt' do |tmp|
+        puts(tmp.find { |line| line =~ (/\A#{name}\b/i) })
       end
     else
       puts 'Contato não encontrado'
