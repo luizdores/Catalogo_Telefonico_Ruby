@@ -21,7 +21,7 @@ when 1
   end
 
   File.open('catalogo.txt', 'r') do |file|
-    $surname_exist = file.read.match?(/\A#{name}\b/i)
+    $surname_exist = file.read.match?(/#{surname}\b/i)
   end
   
   File.open('catalogo.txt', 'r') do |file|
