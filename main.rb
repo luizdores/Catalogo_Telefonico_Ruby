@@ -61,10 +61,10 @@ when 2
   puts 'Digite o nome do contato a ser pesquisado'
   name = gets.chomp.to_s
   File.open('catalogo.txt', 'r') do |file|
-    if file.read.match?(/\A#{name}\b/i)
+    if file.read.match? /\A#{name}\b/i 
       puts 'Contato encontrado'
-      File.open 'catalogo.txt' do |tmp|
-        puts(tmp.find { |line| line =~ (/\A#{name}\b/i) })
+      File.open 'catalogo.txt' do |file|
+        puts file.find { |line| line =~ /\A#{name}\b/i}
       end
     else
       puts 'Contato não encontrado'
@@ -74,11 +74,24 @@ when 2
 when 3
   puts 'Você escolheu a função de listar contatos'
   File.open('catalogo.txt', 'r') do |file|
-    puts file.read
+    puts file.readline('catalogo.txt')
   end
 
 when 4
   puts 'Você escolheu a função de apagar contatos'
+  puts 'Digite o nome do contato a ser excluido'
+  name = gets.chomp.to_s
+
+  read_file = File.new('catalogo.txt', "r").read
+  
+  write_file = File.new('catalogo.txt', "w")
+  
+  read_file.each_line do |line|
+    write_file.write(line) unless line.include? name
+  end
+  
+  puts 'Contato excluido com sucesso'
+
 else
   puts 'Escolha uma opção valida'
 end
