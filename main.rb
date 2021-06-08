@@ -17,13 +17,13 @@ when 1
   surname = gets.chomp.to_s
 
   File.open('catalogo.txt', 'r') do |file|
-    $name_exist = file.read.match?(/\A#{name}\b/i)
+    $name_exist = file.read.match?(/#{name}\b/i)
   end
 
   File.open('catalogo.txt', 'r') do |file|
     $surname_exist = file.read.match?(/#{surname}\b/i)
   end
-  
+
   File.open('catalogo.txt', 'r') do |file|
     if $name_exist && $surname_exist
       puts 'Contato já existente'
@@ -40,7 +40,7 @@ when 1
           file.write("\n#{name}, #{surname}, #{ddd}, #{tel}")
         end
         puts 'Contato adicionado com sucesso'
-      
+
       when 'n'
         break
       end
@@ -61,10 +61,10 @@ when 2
   puts 'Digite o nome do contato a ser pesquisado'
   name = gets.chomp.to_s
   File.open('catalogo.txt', 'r') do |file|
-    if file.read.match? /\A#{name}\b/i 
+    if file.read.match?(/\A#{name}\b/i)
       puts 'Contato encontrado'
       File.open 'catalogo.txt' do |file|
-        puts file.find { |line| line =~ /\A#{name}\b/i}
+        puts file.find { |line| line =~ /\A#{name}\b/i }
       end
     else
       puts 'Contato não encontrado'
@@ -82,16 +82,27 @@ when 4
   puts 'Digite o nome do contato a ser excluido'
   name = gets.chomp.to_s
 
-  read_file = File.new('catalogo.txt', "r").read
-  
-  write_file = File.new('catalogo.txt', "w")
-  
-  read_file.each_line do |line|
-    write_file.write(line) unless line.include? name
+  File.open('catalogo.txt', 'r') do |file|
+    $name_exist = file.read.match?(/#{name}\b/i)
   end
-  
-  puts 'Contato excluido com sucesso'
 
-else
-  puts 'Escolha uma opção valida'
+  puts 'Digite o sobrenome do contato'
+  surname = gets.chomp.to_s
+
+  File.open('catalogo.txt', 'r') do |file|
+    $surname_exist = file.read.match?(/#{surname}\b/i)
+  end
+
+  if $name_exist && $surname_exist
+    read_file = File.new('catalogo.txt', 'r').read
+    write_file = File.new('catalogo.txt', 'w')
+
+    read_file.each_line do |line|
+      write_file.write(line) unless line.include? name
+    end
+
+    puts 'Contato excluido com sucesso'
+  else
+    puts 'Contato não encontrado'
+  end
 end
