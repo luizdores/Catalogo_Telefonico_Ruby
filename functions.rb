@@ -79,14 +79,11 @@
       end
   end
 
-  def contact_delete(contact)
+  def contact_delete(name, surname)
     File.open('catalogo.txt', 'r') do |file|
         $name_exist = file.read.match?(/#{name}\b/i)
-      end
-    
-      puts 'Digite o sobrenome do contato'
-      surname = gets.chomp.to_s
-    
+      end  
+
       File.open('catalogo.txt', 'r') do |file|
         $surname_exist = file.read.match?(/#{surname}\b/i)
       end

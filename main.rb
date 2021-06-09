@@ -57,5 +57,8 @@ when 4
   puts 'Você escolheu a função de apagar contatos'
   puts 'Digite o nome do contato a ser excluido'
   name = gets.chomp.to_s
-  contact_delete(name)
+
+  puts 'Digite o sobrenome do contato'
+  surname = gets.chomp.to_s
+  contact_delete(name, surname)
 end
