@@ -1,5 +1,7 @@
 # frozen_string_literal: false
 
+require_relative 'functions'
+
 puts 'Bem vindo ao catalogo Telefonico'
 puts 'Para adicionar um contato use a opção 1'
 puts 'Para pesquisar um contato use a opção 2'
@@ -57,20 +59,33 @@ when 1
   end
 
 when 2
-  puts 'Você escolheu a função de pesquisa'
-  puts 'Digite o nome do contato a ser pesquisado'
-  name = gets.chomp.to_s
-  File.open('catalogo.txt', 'r') do |file|
-    if file.read.match?(/\A#{name}\b/i)
-      puts 'Contato encontrado'
-      File.open 'catalogo.txt' do |file|
-        puts file.find { |line| line =~ /\A#{name}\b/i }
-      end
-    else
-      puts 'Contato não encontrado'
-    end
-  end
 
+  puts 'Você escolheu a função de pesquisa'
+  puts 'Para pesquisar por primeiro nome escolha 1'
+  puts 'Para pesquisar por sobrenome escolha 2'
+  puts 'Para pesquisar por numero de telefone escolha 3'
+  selec = gets.chomp.to_i
+
+  case selec
+  when 1 
+    puts 'Digite o nome do contato a ser pesquisado'
+    name = gets.chomp.to_s
+    puts search_by_name(name)
+
+  when 2
+    puts 'Digite o nome do contato a ser pesquisado'
+    surname = gets.chomp.to_s
+    puts search_by_surname(surname)
+
+  when 3 
+    puts 'Digite o nome do contato a ser pesquisado'
+    number = gets.chomp.to_s
+    puts search_by_number(number)
+
+  else
+    puts 'Opção invalida'
+  end
+  
 when 3
   puts 'Você escolheu a função de listar contatos'
   File.open('catalogo.txt', 'r') do |file|
@@ -81,28 +96,5 @@ when 4
   puts 'Você escolheu a função de apagar contatos'
   puts 'Digite o nome do contato a ser excluido'
   name = gets.chomp.to_s
-
-  File.open('catalogo.txt', 'r') do |file|
-    $name_exist = file.read.match?(/#{name}\b/i)
-  end
-
-  puts 'Digite o sobrenome do contato'
-  surname = gets.chomp.to_s
-
-  File.open('catalogo.txt', 'r') do |file|
-    $surname_exist = file.read.match?(/#{surname}\b/i)
-  end
-
-  if $name_exist && $surname_exist
-    read_file = File.new('catalogo.txt', 'r').read
-    write_file = File.new('catalogo.txt', 'w')
-
-    read_file.each_line do |line|
-      write_file.write(line) unless line.include? name
-    end
-
-    puts 'Contato excluido com sucesso'
-  else
-    puts 'Contato não encontrado'
-  end
+  contact_delete(name)
 end
