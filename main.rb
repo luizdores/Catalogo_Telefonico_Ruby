@@ -17,46 +17,7 @@ when 1
   name = gets.chomp.to_s
   puts 'Digite o sobrenome do contato'
   surname = gets.chomp.to_s
-
-  File.open('catalogo.txt', 'r') do |file|
-    $name_exist = file.read.match?(/#{name}\b/i)
-  end
-
-  File.open('catalogo.txt', 'r') do |file|
-    $surname_exist = file.read.match?(/#{surname}\b/i)
-  end
-
-  File.open('catalogo.txt', 'r') do |file|
-    if $name_exist && $surname_exist
-      puts 'Contato já existente'
-      puts "Deseja continuar?\nS - Sim\nN - Não"
-      option = gets.chomp.to_s.downcase
-
-      case option
-      when 's'
-        puts 'Digite o DDD do contato'
-        ddd = gets.chomp.to_i
-        puts 'Digite o telefone do contato'
-        tel = gets.chomp.to_i
-        File.open('catalogo.txt', 'a') do |file|
-          file.write("\n#{name}, #{surname}, #{ddd}, #{tel}")
-        end
-        puts 'Contato adicionado com sucesso'
-
-      when 'n'
-        break
-      end
-    else
-      puts 'Digite o DDD do contato'
-      ddd = gets.chomp.to_i
-      puts 'Digite o telefone do contato'
-      tel = gets.chomp.to_i
-      File.open('catalogo.txt', 'a') do |file|
-        file.write("\n#{name}, #{surname}, #{ddd}, #{tel}")
-      end
-      puts 'Contato adicionado com sucesso'
-    end
-  end
+  add_contact(name, surname)
 
 when 2
 
