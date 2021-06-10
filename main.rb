@@ -1,64 +1,45 @@
-# frozen_string_literal: false
 
 require_relative 'functions'
+require 'colorize'
 
-puts 'Bem vindo ao catalogo Telefonico'
-puts 'Para adicionar um contato use a opção 1'
-puts 'Para pesquisar um contato use a opção 2'
-puts 'Para listar os contatos use a opção 3'
-puts 'Para apagar um numero use a opção 4'
-print '> '
-func = gets.chomp.to_i
+  while true
+  puts 'Bem vindo ao catalogo Telefonico'
+  puts '[1] Adicionar contato'.blue
+  puts '[2] Pesquisar contato'.blue
+  puts '[3] listar contatos'.blue
+  puts '[4] Apagar um contato'.blue
+  puts '[5] Sair'.blue
+  print '> '
+  func = gets.chomp.to_i
 
-case func
-when 1
-  puts 'Você escolheu a adicão de numeros'
-  puts 'Digite o nome do contato:'
-  name = gets.chomp.to_s
-  puts 'Digite o sobrenome do contato'
-  surname = gets.chomp.to_s
-  add_contact(name, surname)
-
-when 2
-
-  puts 'Você escolheu a função de pesquisa'
-  puts 'Para pesquisar por primeiro nome escolha 1'
-  puts 'Para pesquisar por sobrenome escolha 2'
-  puts 'Para pesquisar por numero de telefone escolha 3'
-  selec = gets.chomp.to_i
-
-  case selec
-  when 1 
-    puts 'Digite o nome do contato a ser pesquisado'
+  case func
+  when 1
+    puts 'Adicionar contato'
+    puts 'Digite o nome do contato'.blue
     name = gets.chomp.to_s
-    puts search_by_name(name)
+    add_contact(name)
 
   when 2
-    puts 'Digite o nome do contato a ser pesquisado'
-    surname = gets.chomp.to_s
-    puts search_by_surname(surname)
+    puts 'Digite o contato a ser pesquisado'.blue
+    name = gets.chomp.to_s
+    search_by_name(name)
+    
+  when 3
+    puts 'lista de contatos'
+    File.open('catalogo.txt', 'r') do |file|
+      puts file.readline('catalogo.txt').yellow
+    end
 
-  when 3 
-    puts 'Digite o nome do contato a ser pesquisado'
-    number = gets.chomp.to_s
-    puts search_by_number(number)
-
+  when 4
+    puts 'Apagar contatos'
+    puts 'Digite o nome do contato a ser excluido'.blue
+    name = gets.chomp.to_s
+    contact_delete(name)
+  when 5
+    break
   else
-    puts 'Opção invalida'
+    puts "Entrada Inválida !!!".red
   end
-  
-when 3
-  puts 'Você escolheu a função de listar contatos'
-  File.open('catalogo.txt', 'r') do |file|
-    puts file.readline('catalogo.txt')
-  end
-
-when 4
-  puts 'Você escolheu a função de apagar contatos'
-  puts 'Digite o nome do contato a ser excluido'
-  name = gets.chomp.to_s
-
-  puts 'Digite o sobrenome do contato'
-  surname = gets.chomp.to_s
-  contact_delete(name, surname)
+  system("pause")
+  system("cls")
 end
