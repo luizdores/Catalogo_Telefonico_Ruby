@@ -75,6 +75,7 @@ def contact_delete(name)
     write_file = File.new('catalogo.txt', 'w')
     write_file.write(empty_text)
     write_file.close
+    puts "Contato excluido com sucesso".green
   else 
     puts "Nenhum nome corresponde ao informado".red
   end
