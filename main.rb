@@ -1,4 +1,3 @@
-
 require_relative 'functions'
 require 'colorize'
 
