@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'functions'
 require 'colorize'
 
-  while true
+loop do
   puts 'Bem vindo ao catalogo Telefonico'
   puts '[1] Adicionar contato'.blue
   puts '[2] Pesquisar contato'.blue
@@ -22,7 +24,7 @@ require 'colorize'
     puts 'Digite o contato a ser pesquisado'.blue
     name = gets.chomp.to_s
     search_by_name(name)
-    
+
   when 3
     puts 'lista de contatos'
     File.open('catalogo.txt', 'r') do |file|
@@ -37,8 +39,8 @@ require 'colorize'
   when 5
     break
   else
-    puts "Entrada Inválida !!!".red
+    puts 'Entrada Inválida !!!'.red
   end
-  system("pause")
-  system("cls")
+  system('pause')
+  system('cls')
 end
