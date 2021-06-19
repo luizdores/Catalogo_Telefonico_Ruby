@@ -2,3 +2,7 @@ Carlos, Schneider, 91, 987435678
 Caio, Gonçalves, 91, 999999999
 Caio, Gonçalves, 91, 999999999
 Caio, Gonçalves, 91, 999999999
+
+Gustavo pinto, gustavo@gustavo.com, professor, 91985909136
+
+Thiago neves, thiago@neves.com, tester, 91123456789

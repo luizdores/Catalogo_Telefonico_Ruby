@@ -1,7 +1,9 @@
 require_relative 'functions'
 require 'colorize'
+require 'io/console'  
 
 loop do
+  system('clear')
   puts 'Bem vindo ao catalogo Telefonico'
   puts '[1] Adicionar contato'.blue
   puts '[2] Pesquisar contato'.blue
@@ -39,6 +41,8 @@ loop do
   else
     puts 'Entrada Inválida !!!'.red
   end
-  system('pause')
-  system('cls')
+  puts('')
+  puts('Aperte enter para continuar')
+  STDIN.getch 
+  system('clear')
 end

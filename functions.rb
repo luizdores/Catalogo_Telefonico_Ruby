@@ -33,7 +33,7 @@ def search_by_name(name)
   File.open('catalogo.txt', 'r') do |file|
     if file.read.match?(/#{name}\b/i)
       lines = IO.readlines('catalogo.txt')
-      lines.each do |i|
+      for i in lines
         puts i.yellow if i.include?(name)
       end
     else
